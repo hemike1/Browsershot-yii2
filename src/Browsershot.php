@@ -8,8 +8,8 @@ use PharIo\Manifest\InvalidUrlException;
 
 class Browsershot
 {
-    protected static $nodeBinary = '/usr/bin/bash';
-    protected static $chromePath = '/usr/bin/google-chrome';
+    public static $nodeBinary = '/usr/bin/bash';
+    public static $chromePath = '/usr/bin/google-chrome';
 
     /**
      * Create a PDF from raw HTML content.
@@ -17,11 +17,12 @@ class Browsershot
      * @param string $file_path
      * @param string $output_path
      * @param array $variables
+     * @param array $options
      * @return string $output_path
      * @throws \Exception
      * @throws FileDoesNotExistException
      */
-    public static function createPdfFromHtml(string $file_path, string $output_path, array $variables): string
+    public static function createPdfFromFile(string $file_path, string $output_path, array $variables = [], array $options = []): string
     {
         try {
             if ( file_exists($file_path) )
@@ -34,15 +35,15 @@ class Browsershot
             }
             else throw new FileDoesNotExistException($file_path);
 
-            BaseBrowsershot::html($html)
-                ->setNodeBinary(self::$nodeBinary)
-                ->setChromePath(self::$chromePath)
-                ->pdf()
-                ->save($output_path);
+            $pdf = BaseBrowsershot::html($html);
+            ($options['no-sandbox']) ? $pdf->setOption('args', ['--no-sandbox']) : '';
+            $pdf->setNodeBinary(self::$nodeBinary);
+            $pdf->setChromePath(self::$chromePath);
+            $pdf->savePdf($output_path);;
 
             return $output_path;
         } catch (\Exception $e) {
-            throw new \Exception('Failed to create PDF from HTML: ' . $e->getMessage());
+            throw new \Exception('Failed to create PDF from HTML: ' . $e);
         }
     }
 
@@ -55,18 +56,18 @@ class Browsershot
      * @throws \Exception
      * @throws InvalidUrlException
      */
-    public static function createPdfFromUrl(string $url, string $output_path)
+    public static function createPdfFromUrl(string $url, string $output_path, array $options = []): string
     {
         try {
             if ( !filter_var( $url, FILTER_VALIDATE_URL ) ) {
                 throw new InvalidUrlException($url);
             }
 
-            BaseBrowsershot::url($url)
-                ->setNodeBinary(self::$nodeBinary)
-                ->setChromePath(self::$chromePath)
-                ->pdf()
-                ->save($output_path);
+            $pdf = BaseBrowsershot::url($url);
+            ($options['no-sandbox']) ? $pdf->setOption('args', ['--no-sandbox']) : '';
+            $pdf->setNodeBinary(self::$nodeBinary);
+            $pdf->setChromePath(self::$chromePath);
+            $pdf->savePdf($output_path);
 
             return $output_path;
         } catch (\Exception $e) {
@@ -82,13 +83,19 @@ class Browsershot
      * @return string
      * @throws FileDoesNotExistException
      */
-    private static function renderPhpFile(string $file_path, array $variables): string
+    private static function renderPhpFile(string $file_path, array $variables = []): string
     {
         if ( !file_exists($file_path) )
             throw new FileDoesNotExistException($file_path);
-        extract($variables);
-        ob_start();
-        include $file_path;
-        return ob_get_clean();
+
+        if ( !empty($variables) )
+            extract($variables);
+        try {
+            ob_start();
+            include $file_path;
+            return ob_get_clean();
+        } catch (\Exception $e) {
+            throw new \Exception('Failed to render PHP file: ' . $e->getMessage());
+        }
     }
 }
