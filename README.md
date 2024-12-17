@@ -17,6 +17,7 @@ A custom PHP library to generate PDFs and screenshots from URLs, static HTML, or
 6. [License](#license)
 
 ---
+<a id="requirements"/>
 
 ## **Requirements**
 
