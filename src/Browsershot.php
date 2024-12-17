@@ -16,18 +16,19 @@ class Browsershot
      *
      * @param string $file_path
      * @param string $output_path
+     * @param array $variables
      * @return string $output_path
      * @throws \Exception
      * @throws FileDoesNotExistException
      */
-    public static function createPdfFromHtml(string $file_path, string $output_path): string
+    public static function createPdfFromHtml(string $file_path, string $output_path, array $variables): string
     {
         try {
             if ( file_exists($file_path) )
             {
                 $extension = pathinfo($file_path, PATHINFO_EXTENSION);
                 if ( $extension === 'php' )
-                    $html = self::renderPhpFile($file_path);
+                    $html = self::renderPhpFile($file_path, $variables);
                 else
                     $html = file_get_contents($file_path);
             }
@@ -77,14 +78,15 @@ class Browsershot
      * Renders a php inline file and captures its output as HTML
      *
      * @param string $file_path
+     * @param array $variables
      * @return string
      * @throws FileDoesNotExistException
      */
-    private static function renderPhpFile(string $file_path): string
+    private static function renderPhpFile(string $file_path, array $variables): string
     {
         if ( !file_exists($file_path) )
             throw new FileDoesNotExistException($file_path);
-
+        extract($variables);
         ob_start();
         include $file_path;
         return ob_get_clean();
