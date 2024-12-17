@@ -10,11 +10,11 @@ A custom PHP library to generate PDFs and screenshots from URLs, static HTML, or
 2. [Installation](#installation)
 3. [Usage](#usage)
     - [Generate PDF from a URL](#generate-pdf-from-a-url)
-    - [Generate PDF from Raw HTML](#generate-pdf-from-raw-html)
-    - [Generate PDF from a PHP File](#generate-pdf-from-a-php-file)
+    - [Generate PDF from File](#generate-pdf-from-file)
 4. [Configuration](#configuration)
 5. [Troubleshooting](#troubleshooting)
 6. [License](#license)
+7. [Credits](#credits)
 
 ---
 <a id="requirements"/>
@@ -30,6 +30,7 @@ To use this library, ensure you have the following:
 - **Puppeteer** (Node.js library for controlling Headless Chrome)
 
 ---
+<a id="installation"/>
 
 ## **Installation**
 
@@ -72,8 +73,10 @@ The next step requires npm for Puppeteer.
       - Or you already have Google Chrome installed.
 
 ---
+<a id="usage"/>
 
 ## **Usage**
+<a id="generate-pdf-from-a-url"/>
 
 ### **1. Generate PDF from a URL**
 
@@ -93,6 +96,7 @@ echo "PDF saved to: $pdf"; //Returns the output path if ran successfully.
 ```
 
 ---
+<a id="generate-pdf-from-file"/>
 
 ### **2. Generate PDF from a PHP File**
 
@@ -121,6 +125,7 @@ echo "PDF saved to: $outputPath"; // Will also return output_path
 ```
 
 ---
+<a id="configuration"/>
 
 ## **Configuration**
 
@@ -138,6 +143,7 @@ Browsershot::$chromePath = '/custom/path/to/chrome';
 ```
 
 ---
+<a id="troubleshooting"/>
 
 ## **Troubleshooting**
 
@@ -165,12 +171,14 @@ Ensure Chrome/Chromium is installed and accessible via the system path.
    ```
 
 ---
+<a id="license"/>
 
 ## **License**
 
 This library is released under the [MIT License](https://github.com/hemike1/Browsershot-yii2?tab=MIT-1-ov-file).
 
 ---
+<a id="credits"/>
 
 ## **Credits**
 
