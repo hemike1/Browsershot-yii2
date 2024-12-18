@@ -36,7 +36,7 @@ class Browsershot
             else throw new FileDoesNotExistException($file_path);
 
             $pdf = BaseBrowsershot::html($html);
-            ($options['no-sandbox']) ? $pdf->setOption('args', ['--no-sandbox']) : '';
+            (in_array('no-sandbox', $options) && $options['no-sandbox']) ? $pdf->setOption('args', ['--no-sandbox']) : '';
             $pdf->setNodeBinary(self::$nodeBinary);
             $pdf->setChromePath(self::$chromePath);
             $pdf->savePdf($output_path);;
@@ -64,7 +64,7 @@ class Browsershot
             }
 
             $pdf = BaseBrowsershot::url($url);
-            ($options['no-sandbox']) ? $pdf->setOption('args', ['--no-sandbox']) : '';
+            (in_array('no-sandbox', $options) && $options['no-sandbox']) ? $pdf->setOption('args', ['--no-sandbox']) : '';
             $pdf->setNodeBinary(self::$nodeBinary);
             $pdf->setChromePath(self::$chromePath);
             $pdf->savePdf($output_path);
