@@ -1,6 +1,6 @@
 # **Browsershot Library**
 
-A custom PHP library to generate PDFs and screenshots from URLs, static HTML, or dynamic PHP files using **Headless Chrome** powered by Spatie’s Browsershot and Puppeteer.
+A custom PHP library to generate PDFs and screenshots (WiP) from URLs, static HTML, or dynamic PHP files using **Headless Chrome** powered by Spatie’s Browsershot, Node.js and Puppeteer.
 Works in Yii2 framework.
 ---
 
