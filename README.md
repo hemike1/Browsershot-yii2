@@ -44,7 +44,7 @@ To use this library, ensure you have the following:
 The next step requires npm for Puppeteer.
    - On Linux: use terminal to fetch the latest package. 
    ```bash
-   sudo apt install nodejs
+   sudo apt-get install nodejs npm
    # after successful install, check version with:
    node -v
    # version should be >= 14.
@@ -55,9 +55,26 @@ The next step requires npm for Puppeteer.
 3. **Install Puppeteer** <br>
    Browsershot relies on Puppeteer to run Headless Chrome. Install it via npm in the project repository:
    ```bash
-   npm install puppeteer
-   # if issues persist with chromium, use the following command
+   sudo apt-get install chromium-browser
+   sudo apt-get install libx11-xcb1 libxcomposite1 libasound2 libatk1.0-0 libatk-bridge2.0-0 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libgcc1 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6
+   # fetch the headless chrome for the puppeteer, with all of its libraries.
+   sudo npm install -g puppeteer
+   cd /usr/lib/node_modules/puppeteer
+   npm run postinstall
+   # Install puppeteer globally and run the post install.
+   # if issues persist with chromium, use the following command and repeat the postinstall.
    sudo npm install puppeteer --unsafe-perm=true --allow-root
+   ```
+   Node modules might not detect the globally installed packages on windows, so we'll need a workaround.
+   ```bash
+   npm install -g puppeteer # Install puppeteer
+   cd %PROGRAMFILES%\nodejs\node_modules\puppeteer # Find puppeteer folder
+   npm run postinstall # Post install to ensure proper proper operation
+   # In your project's folder, you'll need to link the Browsershot/bin dir to puppetteer
+   cd ./vendor/spatie/browsershot/bin
+   npm init -y
+   npm link puppeteer
+   # Like so.
    ```
 
 4. **Verify Chrome/Chromium Installation** <br>
