@@ -71,7 +71,9 @@ The next step requires npm for Puppeteer.
    cd %PROGRAMFILES%\nodejs\node_modules\puppeteer # Find puppeteer folder
    npm run postinstall # Post install to ensure proper proper operation
    # In your project's folder, you'll need to link the Browsershot/bin dir to puppetteer
-   cd ./vendor/spatie/browsershot/bin
+   cd ./vendor/spatie/browsershot/bin 
+   # or
+   cd ./vendor/hemike1/browsershot-yii2/bin 
    npm init -y
    npm link puppeteer
    # Like so.
