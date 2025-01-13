@@ -68,7 +68,7 @@ The next step requires npm for Puppeteer.
    Node modules might not detect the globally installed packages on windows, so we'll need a workaround.
    ```bash
    npm install -g puppeteer # Install puppeteer
-   cd %PROGRAMFILES%\nodejs\node_modules\puppeteer # Find puppeteer folder
+   cd %APPDATA%\npm\nodejs\node_modules\puppeteer # Find puppeteer folder
    npm run postinstall # Post install to ensure proper proper operation
    # In your project's folder, you'll need to link the Browsershot/bin dir to puppetteer
    cd ./vendor/spatie/browsershot/bin 
